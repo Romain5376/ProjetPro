@@ -1,106 +1,147 @@
-#marginBottomRow {
-  margin-bottom:0;
+@font-face {
+  font-family: 'Brandon Grotesque Light';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Brandon Grotesque Light'), url('brandon-grotesque-light-58a8a4b38001d.woff') format('woff');
 }
+
+#marginBottomRow {
+  margin-bottom: 0;
+}
+
 #paddingCol {
-  padding:0;
+  padding: 0;
+}
+
+.marginTop {
+  margin-top: 2vh;
 }
 
 /* Index.php */
 #titleNav {
-    font-weight: bold;
-    font-size: 4vw;
-    text-transform: uppercase;
-    background: linear-gradient(to right, #0a5b48, rgba(255, 255, 255, 0.7));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  font-size: 3rem;
+  font-family: 'Brandon Grotesque Light';
+  letter-spacing: .10em;
+  color: #cfc4c4;
+  font-weight: bold;
 }
 
-nav ul a.btn, nav ul a.btn-large, nav ul a.btn-small, nav ul a.btn-large, nav ul a.btn-flat, nav ul a.btn-floating {
-    margin-top: 0px;
+@media all and (max-width:690px) {/*En dessous de 690px, met le titre de la nav en 1rem */
+  #titleNav {
+    font-size: 1rem;
+  }
 }
 
-.btn-floating {
-    background-color:#706452;
+.linkNav {
+  font-family: 'Brandon Grotesque Light';
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
-#presentationCard {
-    margin-top: 30px;
-    border:solid 3px;
-    border-radius:5px;
+.linkNav:hover {
+  color: #cfc4c4;
 }
 
 #picturePresentation {
-    background-image: url('../img/françoise.jpeg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    -webkit-transform: rotate(180deg);
+  background-image: url('../img/françoise.jpeg');
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-transform: rotate(180deg);
 }
 
-.CvCategories {
-  border:1px solid black;
-  border-radius:10px;
+.fontFamilyCvTitle {
+  font-size: 2rem;
+  color: #cfc4c4;
+}
+
+.contentCvCard {
+  font-size:1rem;
+}
+
+.card-panel {
+  background-color: #cfc4c4;
+  display: flex;
+  /* contexte sur le parent */
+  flex-direction: column;
+  /* direction d'affichage verticale */
+  justify-content: center;
+  /* alignement vertical */
+  font-family: 'Brandon Grotesque Light';
+  height: 60vh;
+}
+
+@media all and (max-width:600px) {
+  .card-panel {
+    height:25vh;
+  }
 }
 
 blockquote {
-  font-size:25px;
-  background-color:whitesmoke;
-  border:solid 3px white;
-  border-radius:20px;
-  font-family: 'Satisfy', cursive;
-}
-
-.h2 {
-    font-size: 4vw;
-    font-weight: bold;
-}
-
-.paintinFooter {
-    width: 4vw;
-    height: 4vw;
+  font-size:3rem;
+  background-color: rgb(250, 250, 248);
+  font-family: 'Tangerine';
+  border: 3px solid rgb(250, 250, 248);
 }
 
 /* Connection.php */
 
 #connectionBase {
-  background-image:url('../img/fondConnectionForm.jpg');
+  background-image: url('../img/fondConnectionForm.jpg');
   background-size: cover;
-    width: 23rem;
-    height: 35rem;
-    margin-top: 200px;
-    border-radius: 5px;
-    box-shadow: 10px 5px 5px black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 23rem;
+  height: 35rem;
+  margin-top: 200px;
+  border-radius: 5px;
+  box-shadow: 10px 5px 5px black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .inputConnectionForm {
-  background-color:rgba(255, 255, 255, 0.459);
-  border:10px solid rgba(255,255,255,0.459);
-  border-radius:10px;
+  background-color: rgba(255, 255, 255, 0.459);
+  border: 10px solid rgba(255, 255, 255, 0.459);
+  border-radius: 10px;
 }
 
 /* Galerie.php */
 
 .paintinCardGalerie {
-    width: 100%;
-    height: 100%;
-    border:solid 3px;
-    border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  border: solid 1px;
+  border-radius: 5px;
+}
+
+.titleFrame {
+  height: 7vh;
+  background-image: url('../img/categoryFond.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border: 2px solid black;
+  border-radius: 10px;
 }
 
 .titleOfCategory {
-    font-weight: bold;
-    font-size:25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 4rem;
+  font-family: 'Tangerine';
+  color: white;
+  text-shadow: 2px 2px black;
 }
 
 .dimensionFont {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /* 404.php */
 #body404page {
-  background-image:url('../img/fond404.jpg');
+  background-image: url('../img/fond404.jpg');
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -108,43 +149,78 @@ blockquote {
 
 #error404 {
   font-family: 'Luckiest Guy', cursive;
-  color:#fed700;
+  color: #fed700;
   text-shadow: 5px 5px #45070c;
 }
 
 #pageNotFound {
-  font-size:23px;
+  font-size: 23px;
   font-family: 'Luckiest Guy', cursive;
-  color:#fed700;
+  color: #fed700;
   text-shadow: 3px 3px #45070c;
 }
 
 #buttonError {
-  background-color:#fa338e;
+  background-color: #fa338e;
   font-family: 'Luckiest Guy', cursive;
   font-size: 20px;
   text-shadow: 3px 3px black;
 }
 
-/* admin.php */
+/* adminPaintins.php */
 
-#adminTitle {
-  font-family: 'IBM Plex Mono', monospace;
-  color:white;
-  text-shadow: 3px 3px grey;
+.adminTitle {
+  font-family: 'Brandon Grotesque Light';
+  color: white;
+  text-shadow: 2px 2px grey;
+}
+
+.badge {
+  align-content: center;
+  font-family: 'Brandon Grotesque Light';
 }
 
 #paintinVisual {
-  border:5px solid white;
+  border: 5px solid white;
   border-radius: 10px;
 }
 
-.adminCategories {
-  color:white;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size:20px;
+.adminPaintinsCategories {
+  align-content: center;
+  color:black;
+  font-family: 'Tangerine';
+  font-size:3rem;
   font-weight: bold;
 }
 
+.cardAdmin {
+  width: 100%;
+  height:10rem;
+}
 
+.card.horizontal .card-image img {
+  width:100%;
+  height:100%;
+}
 
+.modalTitle {
+  font-family:'Brandon Grotesque Light';
+}
+
+.modal-footer {
+  display:flex;
+  justify-content:center;
+}
+
+.preview {
+	width: 200px; 
+	max-height: 200px;
+	display: block;
+}
+
+/* adminCategories.php */
+
+table,tr {
+  color:white;
+  border:white 1px solid;
+}
