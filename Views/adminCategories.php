@@ -24,11 +24,11 @@ require_once '../Controllers/adminCategoriesCtrl.php';
             <div class="container">
                 <div class="row center-align">
                     <div class="col l6 offset-l3">
-                        <!--Bouton ajout dimensions-->
+                        <!--Bouton ajout catégories-->
                         <a class="waves-effect waves-light btn cyan lighten-1 modal-trigger black-text" href="#addCategoryModal"><i class="material-icons left">add_circle_outline</i>Nouvelle catégorie</a>
-                        <!--/Bouton ajout dimensions-->
+                        <!--/Bouton ajout catégories-->
 
-                        <!--Modal Ajout dimensions-->
+                        <!--Modal Ajout catégories-->
                         <div id="addCategoryModal" class="modal bottom-sheet <?= isset($_POST['create']) && $modalError ? 'autoOpenModal' : '' ?>">
                             <form action='' method="POST">
                                 <div class="modal-header">
@@ -39,7 +39,17 @@ require_once '../Controllers/adminCategoriesCtrl.php';
                                         <i class="material-icons prefix">featured_play_list</i>
                                         <input id="category" type="text" class="validate" name="inputAddCategory" />
                                         <label for="category">Ex: Lever de rideau</label>
-                                        <span class="red-text"><?= isset($messageAddModal['categoryEmpty']) ? $messageAddModal['categoryEmpty'] : '' ?></span>
+                                        <?php
+                                        if (empty($_POST['inputAddCategory'])) {
+                                        ?>
+                                            <span class="red-text"><?= isset($messageAddModal['categoryEmpty']) ? $messageAddModal['categoryEmpty'] : '' ?></span>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <span class="red-text"><?= isset($arrayRegexError['category']) ? $arrayRegexError['category'] : '' ?></span>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                                 <div class="modal-footer col l6 offset-l3 center-align">
@@ -49,7 +59,7 @@ require_once '../Controllers/adminCategoriesCtrl.php';
                                 </div>
                             </form>
                         </div>
-                        <!--/Modal Ajout dimensions-->
+                        <!--/Modal Ajout catégories-->
 
                         <table class="highlight marginTop">
                             <thead>
@@ -123,7 +133,7 @@ require_once '../Controllers/adminCategoriesCtrl.php';
                         </table>
                     </div>
                 </div>
-                <div class="row center-align">
+                <div class="row center-align marginTop">
                     <div class="col l12 m12 s12">
                         <a class="waves-effect waves-light btn deep-purple lighten-1" href="adminPaintins.php">
                             <i class="material-icons left">search</i>Gestion tableaux
@@ -159,6 +169,21 @@ require_once '../Controllers/adminCategoriesCtrl.php';
         $(document).ready(function() {
             $('.modal').modal(); // Modal
             $('.autoOpenModal').modal('open'); //Laisse la modal ouverte
+
+            <?php if (isset($_SESSION['toastAddModal']) && $_SESSION['toastAddModal'] == true) { //Si la session existe est quelle est égale à "true"
+                echo 'M.toast({html: \'La catégorie à bien été ajoutée\',classes: \'green-text\'})'; // Créer le toast et le Message dans le toast
+                unset($_SESSION['toastAddModal']); // Retire la session
+            } ?>
+
+            <?php if (isset($_SESSION['toastUpdateModal']) && $_SESSION['toastUpdateModal'] == true) { //Si la session existe est quelle est égale à "true"
+                echo 'M.toast({html: \'La catégorie à bien été modifiée\',classes: \'yellow-text\'})'; // Créer le toast et le Message dans le toast
+                unset($_SESSION['toastUpdateModal']); // Retire la session
+            } ?>
+
+            <?php if (isset($_SESSION['toastDeleteModal']) && $_SESSION['toastDeleteModal'] == true) { //Si la session existe est quelle est égale à "true"
+                echo 'M.toast({html: \'Le catégorie à bien été supprimée\',classes: \'red-text\'})'; // Créer le toast et le Message dans le toast
+                unset($_SESSION['toastDeleteModal']); // Retire la session
+            } ?>
         });
     </script>
 </body>

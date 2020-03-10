@@ -5,6 +5,11 @@
   src: local('Brandon Grotesque Light'), url('brandon-grotesque-light-58a8a4b38001d.woff') format('woff');
 }
 
+.col .row {
+  margin-left:0;
+  margin-right:0;
+}
+
 #marginBottomRow {
   margin-bottom: 0;
 }
@@ -26,7 +31,9 @@
   font-weight: bold;
 }
 
-@media all and (max-width:690px) {/*En dessous de 690px, met le titre de la nav en 1rem */
+@media all and (max-width:690px) {
+
+  /*En dessous de 690px, met le titre de la nav en 1rem */
   #titleNav {
     font-size: 1rem;
   }
@@ -56,7 +63,7 @@
 }
 
 .contentCvCard {
-  font-size:1rem;
+  font-size: 1rem;
 }
 
 .card-panel {
@@ -68,20 +75,64 @@
   justify-content: center;
   /* alignement vertical */
   font-family: 'Brandon Grotesque Light';
-  height: 60vh;
+  height: 80vh;
 }
 
 @media all and (max-width:600px) {
   .card-panel {
-    height:25vh;
+    height: 52vh;
+  }
+  .fontFamilyCvTitle {
+    font-size: 2rem;
+    color: #cfc4c4;
+  }
+  .contentCvCard {
+    font-size: 1rem;
   }
 }
 
 blockquote {
-  font-size:3rem;
+  font-size: 3rem;
   background-color: rgb(250, 250, 248);
   font-family: 'Tangerine';
   border: 3px solid rgb(250, 250, 248);
+}
+
+
+.footerTitle {
+  font-family: 'Brandon Grotesque Light';
+  text-transform: uppercase;
+  font-weight: bold;
+  color:#cfc4c4;
+  font-size:2rem;
+}
+
+.linkFooter {
+  color: black;
+  font-family: 'Brandon Grotesque Light';
+  text-transform: uppercase;
+  font-size:1rem;
+}
+
+.linkFooter:hover {
+  color: #cfc4c4;
+  font-family: 'Brandon Grotesque Light';
+  text-transform: uppercase;
+  font-size:1rem;
+}
+
+#connectionLink {
+  color:whitesmoke;
+  font-size:1rem;
+  font-family: 'Brandon Grotesque Light';
+  text-transform: uppercase;
+}
+
+#connectionLink:hover {
+  color:white;
+  font-size:1rem;
+  font-family: 'Brandon Grotesque Light';
+  text-transform: uppercase;
 }
 
 /* Connection.php */
@@ -187,40 +238,39 @@ blockquote {
 
 .adminPaintinsCategories {
   align-content: center;
-  color:black;
+  color: black;
   font-family: 'Tangerine';
-  font-size:3rem;
+  font-size: 3rem;
   font-weight: bold;
 }
 
 .cardAdmin {
   width: 100%;
-  height:10rem;
+  height: 10rem;
 }
 
 .card.horizontal .card-image img {
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
 }
 
 .modalTitle {
-  font-family:'Brandon Grotesque Light';
+  font-family: 'Brandon Grotesque Light';
 }
 
 .modal-footer {
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
 }
 
 .preview {
-	width: 200px; 
-	max-height: 200px;
-	display: block;
+  max-height: 200px;
 }
 
 /* adminCategories.php */
 
-table,tr {
-  color:white;
-  border:white 1px solid;
+table,
+tr {
+  color: white;
+  border: white 1px solid;
 }

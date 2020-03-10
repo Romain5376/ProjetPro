@@ -39,24 +39,31 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                             <div class="modal-header">
                                 <h2 class="modalTitle">Ajout Tableau</h2>
                             </div>
-                            <div class="modal-content col l6 offset-l3">
+                            <div class="modal-content col l3">
+                                <img class="preview responsive-img" />
+                            </div>
+                            <div class="modal-content col l6">
                                 <div class="file-field input-field">
-                                    <div class="btn">
-                                        <span>File</span>
-                                        <img class="prewiew" />
-                                        <input type="file" name="file" />
-                                    </div>
-                                    <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text" />
-                                        <!--Message d'erreur pour le type de l'image-->
-                                        <span class="red-text"><?= isset($messageAddModal['imageKO']) ? $messageAddModal['imageKO'] : '' ?></span>
-                                        <!--/Message d'erreur pour le type de l'image-->
-                                        <!--Message d'erreur pour le taille de l'image-->
-                                        <span class="red-text"><?= isset($messageAddModal['sizeKO']) ? $messageAddModal['sizeKO'] : '' ?></span>
-                                        <!--/Message d'erreur pour le taille de l'image-->
-                                        <!--Message d'erreur pour le champs du formulaire est vide-->
-                                        <span class="red-text"><?= isset($messageAddModal['fileEmpty']) ? $messageAddModal['fileEmpty'] : '' ?></span>
-                                        <!--/Message d'erreur pour le champs du formulaire est vide-->
+                                    <div class="row">
+
+                                        <div class="btn col l1">
+                                            <span>File</span>
+                                            <div class="col l10">
+                                                <input type="file" name="file" data-preview=".preview" />
+                                            </div>
+                                        </div>
+                                        <div class="file-path-wrapper col l10">
+                                            <input class="file-path validate" type="text" />
+                                            <!--Message d'erreur pour le type de l'image-->
+                                            <span class="red-text"><?= isset($messageAddModal['imageKO']) ? $messageAddModal['imageKO'] : '' ?></span>
+                                            <!--/Message d'erreur pour le type de l'image-->
+                                            <!--Message d'erreur pour le taille de l'image-->
+                                            <span class="red-text"><?= isset($messageAddModal['sizeKO']) ? $messageAddModal['sizeKO'] : '' ?></span>
+                                            <!--/Message d'erreur pour le taille de l'image-->
+                                            <!--Message d'erreur pour le champs du formulaire est vide-->
+                                            <span class="red-text"><?= isset($messageAddModal['fileEmpty']) ? $messageAddModal['fileEmpty'] : '' ?></span>
+                                            <!--/Message d'erreur pour le champs du formulaire est vide-->
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="input-field">
@@ -83,7 +90,7 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                                         foreach ($resultCategory as $valueCategories) {
                                         ?>
                                             <!--Affichage des catégories dans le select-->
-                                            <option value="<?= isset($valueCategories['category_id']) ? $valueCategories['category_id'] : '' ?>" <?= isset($_POST['categorySelector']) && $_POST['categorySelector'] == $valueCategories['category_id'] ? 'selected' : '' ?>><?= $valueCategories['category_categories'] ?></option>
+                                            <option value="<?= isset($valueCategories['category_id']) ? $valueCategories['category_id'] : '' ?>" <?= isset($_POST['categorySelector']) && $_POST['categorySelector'] == $valueCategories['category_id'] && !empty($messageAddModal) ? 'selected' : '' ?>><?= $valueCategories['category_categories'] ?></option>
                                             <!--/Affichage des catégories dans le select-->
                                         <?php
                                         }
@@ -112,7 +119,7 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                             $arrayCategories = $paintin->selectPaintinByCategory($valueCategories['category_id']); //Affichage des tableaux en fonction de l'id de la catégorie
                         ?>
                             <li class="<?= isset($_POST['update']) && $_POST['categoryId'] == $valueCategories['category_id'] && $modalError ? 'active' : '' ?>">
-                                <div class="collapsible-header adminPaintinsCategories"><?= $valueCategories['category_categories'] ?><span class="new badge green accent-2 black-text" data-badge-caption="tableaux"><?= count($arrayCategories) ?></span></div>
+                                <div class="collapsible-header adminPaintinsCategories"><?= $valueCategories['category_categories'] ?><span class="new badge green accent-2 purple-text" data-badge-caption="tableaux"><?= count($arrayCategories) ?></span></div>
                                 <!--Affichage des catégories-->
                                 <div class="collapsible-body row">
                                     <?php
@@ -132,14 +139,15 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                                                         <p><?= $valuePaintins['dimension_dimensions'] ?></p>
                                                         <!--/Affichage des dimensions-->
                                                     </div>
-                                                    <div class="card-action">
-                                                        <div class="row">
+                                                    <div class="card-action row">
+                                                        <div class="col l6 col m6 col s6 center-align">
                                                             <!--Bouton Modal Modifier-->
-                                                            <a class="btn btn-small waves-effect waves-light green accent-2 modal-trigger" href="#modifyPaintinModal<?= $valuePaintins['paintin_id'] ?>"><i class="material-icons black-text">edit</i></a>
+                                                            <a class="btn btn-small green accent-2 waves-effect waves-light modal-trigger" href="#modifyPaintinModal<?= $valuePaintins['paintin_id'] ?>"><i class="material-icons black-text">edit</i></a>
                                                             <!--/Bouton Modal Modifier-->
-
+                                                        </div>
+                                                        <div class="col l6 col m6 col s6 center-align">
                                                             <!--Bouton Modal Supprimer-->
-                                                            <a class="btn btn-small waves-effect waves-light deep-purple accent-1 modal-trigger" href="#deletePaintinModal<?= $valuePaintins['paintin_id'] ?>"><i class="material-icons">delete</i></a>
+                                                            <a class="btn btn-small deep-purple accent-1 waves-effect waves-light modal-trigger" href="#deletePaintinModal<?= $valuePaintins['paintin_id'] ?>"><i class="material-icons">delete</i></a>
                                                             <!--/Bouton Modal Supprimer-->
                                                         </div>
                                                     </div>
@@ -154,25 +162,30 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                                                 <div class="modal-header">
                                                     <h2 class="modalTitle">Modification Tableau</h2>
                                                 </div>
-
-                                                <div class="modal-content col l6 offset-l3">
+                                                <div class="modal-content col l3">
+                                                    <img class="preview responsive-img" />
+                                                </div>
+                                                <div class="modal-content col l6">
                                                     <div class="file-field input-field">
-                                                        <div class="btn">
-                                                            <span>File</span>
-                                                            <img class="prewiew" />
-                                                            <input type="file" name="file" />
-                                                        </div>
-                                                        <div class="file-path-wrapper">
-                                                            <input class="file-path validate" type="text" />
-                                                            <!--Message d'erreur pour le type de l'image-->
-                                                            <span class="red-text"><?= isset($messageModifyModal['imageKO']) ? $messageModifyModal['imageKO'] : '' ?></span>
-                                                            <!--/Message d'erreur pour le type de l'image-->
-                                                            <!--Message d'erreur pour le taille de l'image-->
-                                                            <span class="red-text"><?= isset($messageModifyModal['sizeKO']) ? $messageModifyModal['sizeKO'] : '' ?></span>
-                                                            <!--/Message d'erreur pour le taille de l'image-->
-                                                            <!--Message d'erreur pour le champs du formulaire est vide-->
-                                                            <span class="red-text"><?= isset($messageModifyModal['fileEmpty']) ? $messageModifyModal['fileEmpty'] : '' ?></span>
-                                                            <!--/Message d'erreur pour le champs du formulaire est vide-->
+                                                        <div class="row">
+                                                            <div class="btn col l1">
+                                                                <span>File</span>
+                                                                <div class="col l10">
+                                                                    <input type="file" name="file" data-preview=".preview" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="file-path-wrapper col l10">
+                                                                <input class="file-path validate" type="text" />
+                                                                <!--Message d'erreur pour le type de l'image-->
+                                                                <span class="red-text"><?= isset($messageModifyModal['imageKO']) ? $messageModifyModal['imageKO'] : '' ?></span>
+                                                                <!--/Message d'erreur pour le type de l'image-->
+                                                                <!--Message d'erreur pour le taille de l'image-->
+                                                                <span class="red-text"><?= isset($messageModifyModal['sizeKO']) ? $messageModifyModal['sizeKO'] : '' ?></span>
+                                                                <!--/Message d'erreur pour le taille de l'image-->
+                                                                <!--Message d'erreur pour le champs du formulaire est vide-->
+                                                                <span class="red-text"><?= isset($messageModifyModal['fileEmpty']) ? $messageModifyModal['fileEmpty'] : '' ?></span>
+                                                                <!--/Message d'erreur pour le champs du formulaire est vide-->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="input-field">
@@ -293,8 +306,7 @@ require_once '../Controllers/adminPaintinsCtrl.php';
             Il vous permettra d'afficher l'aperçu de l'image.
             Vous allez pouvoir modifier la taille via un css respectif.
             */
-            $("input[file]").change(function() {
-                console.log('sdfgh');
+            $("input[data-preview]").change(function() {
                 var input = $(this);
                 var oFReader = new FileReader();
                 oFReader.readAsDataURL(this.files[0]);
@@ -302,6 +314,21 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                     $(input.data('preview')).attr('src', oFREvent.target.result);
                 };
             });
+
+            <?php if (isset($_SESSION['toastAddModal']) && $_SESSION['toastAddModal'] == true) { //Si la session existe est quelle est égale à "true"
+                echo 'M.toast({html: \'Le tableau à bien été ajouté\',classes: \'green-text\'})'; // Créer le toast et le Message dans le toast
+                unset($_SESSION['toastAddModal']); // Retire la session
+            } ?>
+
+            <?php if (isset($_SESSION['toastUpdateModal']) && $_SESSION['toastUpdateModal'] == true) { //Si la session existe est quelle est égale à "true"
+                echo 'M.toast({html: \'Le tableau à bien été modifié\',classes: \'yellow-text\'})'; // Créer le toast et le Message dans le toast
+                unset($_SESSION['toastUpdateModal']); // Retire la session
+            } ?>
+
+            <?php if (isset($_SESSION['toastDeleteModal']) && $_SESSION['toastDeleteModal'] == true) { //Si la session existe est quelle est égale à "true"
+                echo 'M.toast({html: \'Le tableau à bien été supprimé\',classes: \'red-text\'})'; // Créer le toast et le Message dans le toast
+                unset($_SESSION['toastDeleteModal']); // Retire la session
+            } ?>
         });
     </script>
 </body>

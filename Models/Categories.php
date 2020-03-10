@@ -40,6 +40,7 @@ class Categories extends Database
         $req = $this->db->prepare('INSERT INTO gallery_category(category_categories) VALUES (:category)');
         $req->bindValue(':category', $this->categories, PDO::PARAM_STR);
         if ($req->execute()) { //Exécute la requête
+            return true;
         }
     }
 
@@ -48,7 +49,8 @@ class Categories extends Database
         $req = $this->db->prepare('UPDATE gallery_category SET category_categories = :category WHERE category_id = :id');
         $req->bindValue(':category', $this->categories, PDO::PARAM_STR);
         $req->bindValue(':id', $id, PDO::PARAM_INT); 
-        if($req->execute()) {   
+        if($req->execute()) {  
+            return true; 
         }
     }
 
@@ -57,6 +59,7 @@ class Categories extends Database
         $req = $this->db->prepare('DELETE FROM gallery_category WHERE category_id = :id');
         $req->bindValue(':id',$id,PDO::PARAM_INT);
         if($req->execute()) {  
+            return true;
         }
     }
 }

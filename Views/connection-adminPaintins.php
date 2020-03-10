@@ -21,16 +21,36 @@ require_once '../Controllers/connection-adminPaintinsCtrl.php';
             <form action="" class="col l12 m12 s12" id="connectionForm" method="POST">
                 <div class="row">
                     <div class="input-field inputConnectionForm col l12 m12 s12">
-                        <input id="login" type="text" class="validate" name="login">
+                        <input id="login" type="text" class="validate" name="login" />
                         <label class="black-text" for="login">Login</label>
-                        <span class="text-warning font-weight-bold"></span>
+                        <?php
+                        if (empty($_POST['password'])) {
+                        ?>
+                            <span class="deep-purple-text"><?= isset($errorMessageConnection['loginEmpty']) ? $errorMessageConnection['loginEmpty'] : '' ?></span>
+                        <?php
+                        } else {
+                        ?>
+                            <span class="deep-purple-text"><?= isset($errorMessageConnection['errorLoginOrPassword']) ? $errorMessageConnection['errorLoginOrPassword'] : '' ?></span>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field inputConnectionForm col l12 m12 s12">
-                        <input id="password" type="password" class="validate" name="password">
+                        <input id="password" type="password" class="validate" name="password" />
                         <label class="black-text" for="password">Mot de passe</label>
-                        <span class="text-warning font-weight-bold"></span>
+                        <?php
+                        if (empty($_POST['password'])) {
+                        ?>
+                            <span class="deep-purple-text"><?= isset($errorMessageConnection['passwordEmpty']) ? $errorMessageConnection['passwordEmpty'] : '' ?></span>
+                        <?php
+                        } else {
+                        ?>
+                            <span class="deep-purple-text"><?= isset($errorMessageConnection['errorLoginOrPassword']) ? $errorMessageConnection['errorLoginOrPassword'] : '' ?></span>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="row">

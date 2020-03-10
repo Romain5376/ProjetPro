@@ -28,7 +28,7 @@ require_once '../Controllers/adminDimensionsCtrl.php';
                         <!--/Bouton ajout dimensions-->
 
                         <!--Modal Ajout dimensions-->
-                        <div id="addDimensionsModal" class="modal bottom-sheet">
+                        <div id="addDimensionsModal" class="modal bottom-sheet <?= isset($_POST['create']) && $modalError ? 'autoOpenModal' : '' ?>">
                             <form action='' method="POST">
                                 <div class="modal-header">
                                     <h2 class="modalTitle">Ajout Dimensions</h2>
@@ -36,8 +36,19 @@ require_once '../Controllers/adminDimensionsCtrl.php';
                                 <div class="modal-content col l6 offset-l3">
                                     <div class="input-field col l6 offset-l3 col m12 col s6">
                                         <i class="material-icons prefix">straighten</i>
-                                        <input id="dimensions" type="text" class="validate" name="inputAddDimensions" />
+                                        <input id="dimensions" type="text" class="validate" name="inputAddDimension" />
                                         <label for="dimensions">Ex: 90cm x 90cm</label>
+                                        <?php
+                                        if (empty($_POST['inputAddDimension'])) {
+                                        ?>
+                                            <span class="red-text"><?= isset($messageAddModal['dimensionEmpty']) ? $messageAddModal['dimensionEmpty'] : '' ?></span>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <span class="red-text"><?= isset($arrayRegexError['dimension']) ? $arrayRegexError['dimension'] : '' ?></span>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                                 <div class="modal-footer col l6 offset-l3 center-align">
@@ -66,11 +77,11 @@ require_once '../Controllers/adminDimensionsCtrl.php';
                                         <td class="center-align"><?= $valueDimension['dimension_dimensions'] ?></td>
                                         <td class="center-align">
                                             <!--Bouton Modifier-->
-                                            <a class="btn btn waves-effect waves-light green accent-2 modal-trigger black-text" href="#modifyDimensionsModal?id=<?= $valueDimension['dimension_id'] ?>">Modifier<i class="material-icons left black-text">edit</i></a>
+                                            <a class="btn btn waves-effect waves-light green accent-2 modal-trigger black-text" href="#modifyDimensionModal?id=<?= $valueDimension['dimension_id'] ?>">Modifier<i class="material-icons left black-text">edit</i></a>
                                             <!--/Bouton Modifier-->
 
                                             <!--Modal Modification-->
-                                            <div id="modifyDimensionsModal?id=<?= $valueDimension['dimension_id'] ?>" class="modal bottom-sheet ">
+                                            <div id="modifyDimensionModal?id=<?= $valueDimension['dimension_id'] ?>" class="modal bottom-sheet <?= isset($_POST['update']) && $modalError ? 'autoOpenModal' : '' ?>">
                                                 <form action='' method="POST">
                                                     <div class="modal-header">
                                                         <h2 class="modalTitle black-text center-align">Modification Dimensions</h2>
@@ -78,8 +89,9 @@ require_once '../Controllers/adminDimensionsCtrl.php';
                                                     <div class="modal-content col l6 offset-l3">
                                                         <div class="input-field col l6 offset-l3 col m12 col s6">
                                                             <i class="material-icons prefix">straighten</i>
-                                                            <input id="dimensions" type="text" class="validate" name="inputModifyDimensions" value="<?= $valueDimension['dimension_dimensions'] ?>" />
+                                                            <input id="dimensions" type="text" class="validate" name="inputModifyDimension" value="<?= $valueDimension['dimension_dimensions'] ?>" />
                                                             <label for="dimensions">Ex: 90cm x 90cm</label>
+                                                            <span class="red-text"><?= isset($arrayRegexError['dimension']) ? $arrayRegexError['dimension'] : '' ?></span>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer col l6 offset-l3 center-align">
@@ -157,6 +169,21 @@ require_once '../Controllers/adminDimensionsCtrl.php';
             $('.collapsible').collapsible(); //Volets catégories
             $('.modal').modal(); // Modal
             $('.autoOpenModal').modal('open'); //Laisse la d'ajout modal ouverte
+
+            <?php if (isset($_SESSION['toastAddModal']) && $_SESSION['toastAddModal'] == true) { //Si la session existe est quelle est égale à "true"
+                echo 'M.toast({html: \'La dimension à bien été ajoutée\',classes: \'green-text\'})'; // Créer le toast et le Message dans le toast
+                unset($_SESSION['toastAddModal']); // Retire la session
+            } ?>
+
+            <?php if (isset($_SESSION['toastUpdateModal']) && $_SESSION['toastUpdateModal'] == true) { //Si la session existe est quelle est égale à "true"
+                echo 'M.toast({html: \'La dimension à bien été modifiée\',classes: \'yellow-text\'})'; // Créer le toast et le Message dans le toast
+                unset($_SESSION['toastUpdateModal']); // Retire la session
+            } ?>
+
+            <?php if (isset($_SESSION['toastDeleteModal']) && $_SESSION['toastDeleteModal'] == true) { //Si la session existe est quelle est égale à "true"
+                echo 'M.toast({html: \'Le dimension à bien été supprimée\',classes: \'red-text\'})'; // Créer le toast et le Message dans le toast
+                unset($_SESSION['toastDeleteModal']); // Retire la session
+            } ?>
         });
     </script>
 </body>

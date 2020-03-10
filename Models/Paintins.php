@@ -71,6 +71,7 @@ class Paintins extends Database //La classe Paintins hérite de la classe Databa
         $req->bindValue(':dimensionId', $this->dimensionId, PDO::PARAM_INT); //Récupère la valeur de dimensionId
         $req->bindValue(':categoryId', $this->categoryId, PDO::PARAM_INT); //Récupère la valeur de categoryId
         if ($req->execute()) { //Exécute la requête
+            return true;
         }
     }
 
@@ -82,7 +83,7 @@ class Paintins extends Database //La classe Paintins hérite de la classe Databa
         $req->bindValue(':dimensionId', $this->dimensionId, PDO::PARAM_INT);
         $req->bindValue(':id', $id, PDO::PARAM_INT);
         if($req->execute()) {
-
+            return true;
         }
     }
 
@@ -91,7 +92,7 @@ class Paintins extends Database //La classe Paintins hérite de la classe Databa
         $req = $this->db->prepare('DELETE FROM gallery_paintin WHERE paintin_id = :id');
         $req->bindValue(':id',$id,PDO::PARAM_INT);
         if($req->execute()) {
-            
+            return true;
         }
     }
 }

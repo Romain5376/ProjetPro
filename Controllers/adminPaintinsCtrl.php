@@ -38,7 +38,6 @@ if (isset($_POST['create'])) { // Si le bouton ajout tableau existe et que les c
 
         // Check s'il s'agit bien d'une image 
         if ($fileType[0] == 'image') {
-            $messageAddModal['imageOK'] = 'Votre fichier est bien une image : ' . $fileMime . '.';
             if (in_array($extension_upload, $extensions_allowed)) {
                 // On peut valider le fichier et le stocker définitivement
                 move_uploaded_file($_FILES['file']['tmp_name'], ($fileName . '.' . $extension_upload)); //Permet de déplacer le fichier répertorié par le nom temporaire
@@ -50,11 +49,12 @@ if (isset($_POST['create'])) { // Si le bouton ajout tableau existe et que les c
                 $paintin->setDimensionId($dimensionSelector);
                 $paintin->setCategoryId($categorySelector);
                 if ($paintin->addPaintins()) {
-                    $modalError = false;
+                    $_SESSION['toastAddModal'] = true;
                 }
             }
         } else {
             $modalError = true;
+            $_SESSION['toastAddModal'] = false;
             $messageAddModal['imageKO'] = 'Votre fichier n\'est pas une image : ' . $fileMime . '.';
         }
 
@@ -62,20 +62,24 @@ if (isset($_POST['create'])) { // Si le bouton ajout tableau existe et que les c
         $limit = 1000000; // on definit une limit en bits, 1Mo = 1000000 Bits.
         if ($_FILES["file"]["size"] > $limit) {
             $modalError = true;
+            $_SESSION['toastAddModal'] = false;
             $messageAddModal['sizeKO'] = 'Désolé, votre fichier doit faire moins de 1 Mo.';
         }
     }
     if (isset($_FILES) && $_FILES['file']['error'] == 4) {
         $modalError = true;
+        $_SESSION['toastAddModal'] = false;
         $messageAddModal['fileEmpty'] = 'Veuillez selectionner une photo !';
     }
     if (empty($_POST['dimensionSelector'])) {
         $modalError = true;
+        $_SESSION['toastAddModal'] = false;
         $messageAddModal['dimensionEmpty'] = 'Veuillez choisir une dimension !';
     }
     
     if (empty($_POST['categorySelector'])) {
         $modalError = true;
+        $_SESSION['toastAddModal'] = false;
         $messageAddModal['categoryEmpty'] = 'Veuillez choisir une catégorie !';
     }
 }
@@ -107,11 +111,13 @@ if (isset($_POST['update'])) { // Si le bouton modification tableau existe et qu
                 $paintin->setDimensionId($modifyDimensionSelector);
                 $paintin->setCategoryId($modifyCategorySelector);
                 if ($paintin->updatePaintins($id)) {
+                    $_SESSION['toastUpdateModal'] = true;
                 }
             }
         } else {
             $modalError = true;
             $messageModifyModal['imageKO'] = 'Votre fichier n\'est pas une image : ' . $fileMime . '.';
+            $_SESSION['toastUpdateModal'] = false;
         }
 
         // Check file size
@@ -119,18 +125,22 @@ if (isset($_POST['update'])) { // Si le bouton modification tableau existe et qu
         if ($_FILES["file"]["size"] > $limit) {
             $modalError = true;
             $messageModifyModal['sizeKO'] = 'Désolé, votre fichier doit faire moins de 1 Mo.';
+            $_SESSION['toastUpdateModal'] = false;
         }
     }
     if (isset($_FILES) && $_FILES['file']['error'] == 4) {
         $modalError = true;
         $messageModifyModal['fileEmpty'] = 'Veuillez selectionner une photo !';
+        $_SESSION['toastUpdateModal'] = false;
     }
 }
 
 //SUPPRESSION TABLEAU
 if (isset($_POST['delete'])) { //Si le bouton delete existe
     $id = $_POST['delete']; // Récupère l'id du tableau 
-    $paintin->deletePaintin($id); // Supprime le tableau
+    if ($paintin->deletePaintin($id)) { // Supprime le tableau
+        $_SESSION['toastDeleteModal'] = true;
+    } 
 }
 
 

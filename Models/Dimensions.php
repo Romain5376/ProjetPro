@@ -41,6 +41,7 @@ class Dimensions extends Database
         $req = $this->db->prepare('INSERT INTO gallery_dimension(dimension_dimensions) VALUES (:dimensions)');
         $req->bindValue(':dimensions', $this->dimensions, PDO::PARAM_STR);
         if ($req->execute()) { //Exécute la requête
+            return true;
         }
     }
 
@@ -49,7 +50,8 @@ class Dimensions extends Database
         $req = $this->db->prepare('UPDATE gallery_dimension SET dimension_dimensions = :dimensions WHERE dimension_id = :id');
         $req->bindValue(':dimensions', $this->dimensions, PDO::PARAM_STR);
         $req->bindValue(':id', $id, PDO::PARAM_INT); 
-        if($req->execute()) {   
+        if($req->execute()) {  
+            return true; 
         }
     }
 
@@ -58,6 +60,7 @@ class Dimensions extends Database
         $req = $this->db->prepare('DELETE FROM gallery_dimension WHERE dimension_id = :id');
         $req->bindValue(':id',$id,PDO::PARAM_INT);
         if($req->execute()) {  
+            return true;
         }
     }
 }
