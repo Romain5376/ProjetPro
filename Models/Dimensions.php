@@ -63,4 +63,14 @@ class Dimensions extends Database
             return true;
         }
     }
+
+    public function checkExistDimension()
+    {
+        $req = $this->db->prepare('SELECT * FROM gallery_dimension WHERE dimension_dimensions = :dimension');
+        $req->bindValue(':dimension', $this->dimensions, PDO::PARAM_STR);
+        if($req->execute()){
+            $reqFetch = $req->fetchAll(PDO::FETCH_ASSOC); //Facilite le renvoi du résultat
+            return $reqFetch;
+        }
+    }
 }

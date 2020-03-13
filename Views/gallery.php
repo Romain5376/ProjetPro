@@ -60,11 +60,10 @@ require_once '../Controllers/galleryCtrl.php';
             </div>
             <!-- Footer -->
             <footer class="page-footer white z-depth-3">
-
-                <div class="row center-align">
-                    <div class="col l3 offset-l3 col m3 offset-m3 col s12">
+                <div class="row center-align noMarginRow">
+                    <div class="col l3 offset-l3 col m12 col s12">
                         <div class="row center-align">
-                            <div class="col l6 offset-l3 col m6 offset-m3 col s6 offset-s3">
+                            <div class="col l6 offset-l3 col m12 col s12">
                                 <p class="footerTitle">Informations</p>
                             </div>
                         </div>
@@ -129,8 +128,13 @@ require_once '../Controllers/galleryCtrl.php';
                                 <!--Modal Contact-->
                                 <div id="mailModal" class="modal">
                                     <div class="modal-content black-text">
-                                        <h4>Adresse mail</h4>
-                                        <p>chouzenoux.alain@gmail.com</p>
+                                        <h4>Contact</h4>
+                                        <p>Nom: Chouzenoux</p>
+                                        <p>Prénom: Françoise</p>
+                                        <p>Adresse mail:
+                                            <a href="mailto:">chouzenoux.alain@gmail.com</a>
+                                            <!--Lien pour envoyer un mail à l'adresse renseignée-->
+                                        </p>
                                     </div>
                                 </div>
                                 <!--/Modal Contact-->
@@ -138,9 +142,9 @@ require_once '../Controllers/galleryCtrl.php';
                         </div>
                     </div>
 
-                    <div class="col l3 col m3 col s12">
+                    <div class="col l3 col m12 col s12">
                         <div class="row center-align">
-                            <div class="col l6 offset-l3 col m6 offset-m3 col s6 offset-s3">
+                            <div class="col l6 offset-l3 col m12 col s12">
                                 <p class="footerTitle">Navigation</p>
                             </div>
                         </div>

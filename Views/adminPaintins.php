@@ -42,17 +42,17 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                             <div class="modal-content col l3">
                                 <img class="preview responsive-img" />
                             </div>
-                            <div class="modal-content col l6">
+                            <div class="modal-content col l6 col m12 col s12">
                                 <div class="file-field input-field">
                                     <div class="row">
 
-                                        <div class="btn col l1">
+                                        <div class="btn col l1 col m1 col s2">
                                             <span>File</span>
                                             <div class="col l10">
                                                 <input type="file" name="file" data-preview=".preview" />
                                             </div>
                                         </div>
-                                        <div class="file-path-wrapper col l10">
+                                        <div class="file-path-wrapper col l10 col m10 col s10">
                                             <input class="file-path validate" type="text" />
                                             <!--Message d'erreur pour le type de l'image-->
                                             <span class="red-text"><?= isset($messageAddModal['imageKO']) ? $messageAddModal['imageKO'] : '' ?></span>
@@ -63,6 +63,7 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                                             <!--Message d'erreur pour le champs du formulaire est vide-->
                                             <span class="red-text"><?= isset($messageAddModal['fileEmpty']) ? $messageAddModal['fileEmpty'] : '' ?></span>
                                             <!--/Message d'erreur pour le champs du formulaire est vide-->
+                                            <span class="red-text"><?= isset($messageAddModal['errorFile']) ? $messageAddModal['errorFile'] : '' ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -101,7 +102,7 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                                     <!--/Message d'erreur si le champ du formulaire est vide-->
                                 </div>
                             </div>
-                            <div class="modal-footer col l6 offset-l3 center-align">
+                            <div class="modal-footer col l12 center-align">
                                 <button class="btn waves-effect waves-light light-blue accent-4" type="submit" name="create">Ajouter le tableau
                                     <i class="material-icons left">check</i>
                                 </button>
@@ -140,12 +141,12 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                                                         <!--/Affichage des dimensions-->
                                                     </div>
                                                     <div class="card-action row">
-                                                        <div class="col l6 col m6 col s6 center-align">
+                                                        <div class="col l6 col m6 col s6">
                                                             <!--Bouton Modal Modifier-->
-                                                            <a class="btn btn-small green accent-2 waves-effect waves-light modal-trigger" href="#modifyPaintinModal<?= $valuePaintins['paintin_id'] ?>"><i class="material-icons black-text">edit</i></a>
+                                                            <a id="modifyLink" onclick="getId(<?= $valuePaintins['paintin_id'] ?>)" class="btn btn-small green accent-2 waves-effect waves-light modal-trigger" href="#modifyPaintinModal<?= $valuePaintins['paintin_id'] ?>"><i class="material-icons black-text">edit</i></a>
                                                             <!--/Bouton Modal Modifier-->
                                                         </div>
-                                                        <div class="col l6 col m6 col s6 center-align">
+                                                        <div class="col l6 col m6 col s6">
                                                             <!--Bouton Modal Supprimer-->
                                                             <a class="btn btn-small deep-purple accent-1 waves-effect waves-light modal-trigger" href="#deletePaintinModal<?= $valuePaintins['paintin_id'] ?>"><i class="material-icons">delete</i></a>
                                                             <!--/Bouton Modal Supprimer-->
@@ -162,20 +163,20 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                                                 <div class="modal-header">
                                                     <h2 class="modalTitle">Modification Tableau</h2>
                                                 </div>
-                                                <div class="modal-content col l3">
-                                                    <img class="preview responsive-img" />
+                                                <div class="modal-content col l3 col m3 col s12">
+                                                    <img class="previewModify<?= $valuePaintins['paintin_id'] ?> responsive-img" />
                                                 </div>
                                                 <div class="modal-content col l6">
                                                     <div class="file-field input-field">
                                                         <div class="row">
-                                                            <div class="btn col l1">
+                                                            <div class="btn col l1 col m4 col s2">
                                                                 <span>File</span>
-                                                                <div class="col l10">
-                                                                    <input type="file" name="file" data-preview=".preview" />
+                                                                <div class="col l10 col m8 col s12">
+                                                                    <input type="file" name="file" data-preview=".previewModify<?= $valuePaintins['paintin_id'] ?>" />
                                                                 </div>
                                                             </div>
-                                                            <div class="file-path-wrapper col l10">
-                                                                <input class="file-path validate" type="text" />
+                                                            <div class="file-path-wrapper col l10 col m8 col s10">
+                                                                <input id="imageSrc<?= $valuePaintins['paintin_id'] ?>" class="file-path validate" type="text" value="<?= $valuePaintins['paintin_files'] ?>" />
                                                                 <!--Message d'erreur pour le type de l'image-->
                                                                 <span class="red-text"><?= isset($messageModifyModal['imageKO']) ? $messageModifyModal['imageKO'] : '' ?></span>
                                                                 <!--/Message d'erreur pour le type de l'image-->
@@ -185,6 +186,7 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                                                                 <!--Message d'erreur pour le champs du formulaire est vide-->
                                                                 <span class="red-text"><?= isset($messageModifyModal['fileEmpty']) ? $messageModifyModal['fileEmpty'] : '' ?></span>
                                                                 <!--/Message d'erreur pour le champs du formulaire est vide-->
+                                                                <span class="red-text"><?= isset($messageModifyModal['errorFile']) ? $messageModifyModal['errorFile'] : '' ?></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -222,7 +224,7 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                                                     </div>
                                                 </div>
 
-                                                <div class="modal-footer col l6 offset-l3 center-align">
+                                                <div class="modal-footer col l12 col m6 offset-m3 col s12 center-align">
                                                     <input type="hidden" name="categoryId" value="<?= $valuePaintins['category_id'] ?>" />
                                                     <button class="btn waves-effect waves-light light-blue accent-4" type="submit" name="update" value="<?= $valuePaintins['paintin_id'] ?>">Sauvegarder les changements
                                                         <i class="material-icons left">check</i>
@@ -266,15 +268,14 @@ require_once '../Controllers/adminPaintinsCtrl.php';
 
     <!--Bouton de redirection sur les autres pages du site-->
     <div class="row center-align">
-        <div class="col l12 m12 s12">
-            <a class="waves-effect waves-light btn deep-purple lighten-1" href="adminDimensions.php">
-                <i class="material-icons left">search</i>Gestion dimensions
+        <div class="offset-l4 col l2 col m6 col s6 marginTop">
+            <a class="waves-effect waves-light btn deep-purple lighten-1" href="adminCategories.php">
+                <i class="material-icons left">search</i>Catégories
             </a>
-            <a class="waves-effect waves-light btn blue lighten-1 black-text" href="../index.php">
-                <i class="material-icons left">home</i>Retour accueil
-            </a>
-            <a class="waves-effect waves-light btn indigo lighten-1" href="adminCategories.php">
-                <i class="material-icons left">search</i>Gestion catégories
+        </div>
+        <div class="col l2 col m6 col s6 marginTop">
+            <a class="waves-effect waves-light btn indigo lighten-1" href="adminDimensions.php">
+                <i class="material-icons left">search</i>Dimensions
             </a>
         </div>
     </div>
@@ -295,7 +296,6 @@ require_once '../Controllers/adminPaintinsCtrl.php';
     <!--Script jQuery-->
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="main.js"></script>
     <script>
         $(document).ready(function() {
             $('.collapsible').collapsible(); //Volets catégories
@@ -306,12 +306,12 @@ require_once '../Controllers/adminPaintinsCtrl.php';
             Il vous permettra d'afficher l'aperçu de l'image.
             Vous allez pouvoir modifier la taille via un css respectif.
             */
-            $("input[data-preview]").change(function() {
-                var input = $(this);
-                var oFReader = new FileReader();
-                oFReader.readAsDataURL(this.files[0]);
-                oFReader.onload = function(oFREvent) {
-                    $(input.data('preview')).attr('src', oFREvent.target.result);
+            $("input[data-preview]").change(function() { // Quand la valeur de input data-preview change déclenchement de la function
+                var input = $(this); // Variable qui permet de récupérer les informations de l'input ciblé
+                var oFReader = new FileReader(); // Instanciation d'un nouvel objet avec la class FileReader (Permet de lire les fichiers qui sont envoyés)
+                oFReader.readAsDataURL(this.files[0]); // Récupère l'URL grâce à la méthode readAsDataUrl (Lis le fichier que j'ai choisi)
+                oFReader.onload = function(oFREvent) { // Au chargement de l'objet
+                    $(input.data('preview')).attr('src', oFREvent.target.result); // Permet de changer la source de l'image qui porte la class preview
                 };
             });
 
@@ -330,6 +330,11 @@ require_once '../Controllers/adminPaintinsCtrl.php';
                 unset($_SESSION['toastDeleteModal']); // Retire la session
             } ?>
         });
+
+        function getId(id) { // Création d'une nouvelle fonction getId prenant en paramètre l'id du tableau 
+            let imageSrc = $("#imageSrc" + id).val(); // Initialisation d'une nouvelle variable avec la valeur de du chemin de l'image (input type text)
+            $('.previewModify' + id).attr('src', imageSrc); // Changement de la source du preview en fonction de l'id du tableau 
+        }
     </script>
 </body>
 

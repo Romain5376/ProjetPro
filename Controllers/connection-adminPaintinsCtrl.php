@@ -27,3 +27,4 @@ if (isset($_POST['connection'])) { //Si le bouton connexion existe
             }
         }
 }
+

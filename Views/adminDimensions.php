@@ -41,11 +41,12 @@ require_once '../Controllers/adminDimensionsCtrl.php';
                                         <?php
                                         if (empty($_POST['inputAddDimension'])) {
                                         ?>
-                                            <span class="red-text"><?= isset($messageAddModal['dimensionEmpty']) ? $messageAddModal['dimensionEmpty'] : '' ?></span>
+                                            <span class="red-text"><?= isset($arrayErrorAddModal['dimensionEmpty']) ? $arrayErrorAddModal['dimensionEmpty'] : '' ?></span>
                                         <?php
                                         } else {
                                         ?>
-                                            <span class="red-text"><?= isset($arrayRegexError['dimension']) ? $arrayRegexError['dimension'] : '' ?></span>
+                                            <span class="red-text"><?= isset($arrayErrorAddModal['dimension']) ? $arrayErrorAddModal['dimension'] : '' ?></span>
+                                            <span class="red-text"><?= isset($arrayErrorAddModal['dimensionExist']) ? $arrayErrorAddModal['dimensionExist'] : '' ?></span>
                                         <?php
                                         }
                                         ?>
@@ -60,7 +61,7 @@ require_once '../Controllers/adminDimensionsCtrl.php';
                         </div>
                         <!--/Modal Ajout dimensions-->
                     </div>
-                    <div class="col l6 offset-l3">
+                    <div class="col l6 offset-l3 col m12 col s12">
                         <table class="highlight marginTop">
                             <thead>
                                 <tr>
@@ -77,11 +78,11 @@ require_once '../Controllers/adminDimensionsCtrl.php';
                                         <td class="center-align"><?= $valueDimension['dimension_dimensions'] ?></td>
                                         <td class="center-align">
                                             <!--Bouton Modifier-->
-                                            <a class="btn btn waves-effect waves-light green accent-2 modal-trigger black-text" href="#modifyDimensionModal?id=<?= $valueDimension['dimension_id'] ?>">Modifier<i class="material-icons left black-text">edit</i></a>
+                                            <a class="btn btn waves-effect waves-light green accent-2 modal-trigger black-text" href="#updateDimensionModal?id=<?= $valueDimension['dimension_id'] ?>"><i class="material-icons black-text">edit</i></a>
                                             <!--/Bouton Modifier-->
 
                                             <!--Modal Modification-->
-                                            <div id="modifyDimensionModal?id=<?= $valueDimension['dimension_id'] ?>" class="modal bottom-sheet <?= isset($_POST['update']) && $modalError ? 'autoOpenModal' : '' ?>">
+                                            <div id="updateDimensionModal?id=<?= $valueDimension['dimension_id'] ?>" class="modal bottom-sheet <?= isset($_POST['update']) && $modalError && $valueDimension['dimension_id'] == $_POST['update'] ? 'autoOpenModal' : '' ?>">
                                                 <form action='' method="POST">
                                                     <div class="modal-header">
                                                         <h2 class="modalTitle black-text center-align">Modification Dimensions</h2>
@@ -89,9 +90,20 @@ require_once '../Controllers/adminDimensionsCtrl.php';
                                                     <div class="modal-content col l6 offset-l3">
                                                         <div class="input-field col l6 offset-l3 col m12 col s6">
                                                             <i class="material-icons prefix">straighten</i>
-                                                            <input id="dimensions" type="text" class="validate" name="inputModifyDimension" value="<?= $valueDimension['dimension_dimensions'] ?>" />
+                                                            <input id="dimensions" type="text" class="validate" name="inputUpdateDimension" value="<?= $valueDimension['dimension_dimensions'] ?>" />
                                                             <label for="dimensions">Ex: 90cm x 90cm</label>
-                                                            <span class="red-text"><?= isset($arrayRegexError['dimension']) ? $arrayRegexError['dimension'] : '' ?></span>
+                                                            <?php
+                                                            if (empty($_POST['inputUpdateDimension'])) {
+                                                            ?>
+                                                                <span class="red-text"><?= isset($arrayErrorUpdateModal['dimensionEmpty']) ? $arrayErrorUpdateModal['dimensionEmpty'] : '' ?></span>
+                                                            <?php
+                                                            } else {
+                                                            ?>
+                                                                <span class="red-text"><?= isset($arrayErrorUpdateModal['dimension']) ? $arrayErrorUpdateModal['dimension'] : '' ?></span>
+                                                                <span class="red-text"><?= isset($arrayErrorUpdateModal['dimensionExist']) ? $arrayErrorUpdateModal['dimensionExist'] : '' ?></span>
+                                                            <?php
+                                                            }
+                                                            ?>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer col l6 offset-l3 center-align">
@@ -105,7 +117,7 @@ require_once '../Controllers/adminDimensionsCtrl.php';
                                         </td>
                                         <td class="center-align">
                                             <!--Bouton Supprimer-->
-                                            <a class="btn btn waves-effect waves-light deep-purple accent-1 modal-trigger" href="#deleteDimensionsModal?id=<?= $valueDimension['dimension_id'] ?>">Supprimer<i class="material-icons left">delete</i></a>
+                                            <a class="btn btn waves-effect waves-light deep-purple accent-1 modal-trigger" href="#deleteDimensionsModal?id=<?= $valueDimension['dimension_id'] ?>"><i class="material-icons">delete</i></a>
                                             <!--/Bouton Supprimer-->
 
                                             <!--Modal de Suppression-->
@@ -133,15 +145,14 @@ require_once '../Controllers/adminDimensionsCtrl.php';
                     </div>
                 </div>
                 <div class="row center-align">
-                    <div class="col l12 m12 s12">
+                    <div class="offset-l4 col l2 col m6 col s12 marginTop">
                         <a class="waves-effect waves-light btn deep-purple lighten-1" href="adminPaintins.php">
-                            <i class="material-icons left">search</i>Gestion tableaux
+                            <i class="material-icons left">search</i>Tableaux
                         </a>
-                        <a class="waves-effect waves-light btn blue lighten-1 black-text" href="../index.php">
-                            <i class="material-icons left">home</i>Retour accueil
-                        </a>
+                    </div>
+                    <div class="col l2 col m6 col s12 marginTop">
                         <a class="waves-effect waves-light btn indigo lighten-1" href="adminCategories.php">
-                            <i class="material-icons left">search</i>Gestion catégories
+                            <i class="material-icons left">search</i>Catégories
                         </a>
                     </div>
                 </div>
@@ -181,7 +192,7 @@ require_once '../Controllers/adminDimensionsCtrl.php';
             } ?>
 
             <?php if (isset($_SESSION['toastDeleteModal']) && $_SESSION['toastDeleteModal'] == true) { //Si la session existe est quelle est égale à "true"
-                echo 'M.toast({html: \'Le dimension à bien été supprimée\',classes: \'red-text\'})'; // Créer le toast et le Message dans le toast
+                echo 'M.toast({html: \'La dimension à bien été supprimée\',classes: \'red-text\'})'; // Créer le toast et le Message dans le toast
                 unset($_SESSION['toastDeleteModal']); // Retire la session
             } ?>
         });

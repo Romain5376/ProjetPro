@@ -23,7 +23,7 @@ require_once '../Controllers/adminCategoriesCtrl.php';
             <h2 class="adminTitle">Les catégories</h2>
             <div class="container">
                 <div class="row center-align">
-                    <div class="col l6 offset-l3">
+                    <div class="col l6 offset-l3 col m12 col s12">
                         <!--Bouton ajout catégories-->
                         <a class="waves-effect waves-light btn cyan lighten-1 modal-trigger black-text" href="#addCategoryModal"><i class="material-icons left">add_circle_outline</i>Nouvelle catégorie</a>
                         <!--/Bouton ajout catégories-->
@@ -42,11 +42,13 @@ require_once '../Controllers/adminCategoriesCtrl.php';
                                         <?php
                                         if (empty($_POST['inputAddCategory'])) {
                                         ?>
-                                            <span class="red-text"><?= isset($messageAddModal['categoryEmpty']) ? $messageAddModal['categoryEmpty'] : '' ?></span>
+                                            <span class="red-text"><?= isset($arrayErrorAddModal['categoryEmpty']) ? $arrayErrorAddModal['categoryEmpty'] : '' ?></span>
                                         <?php
-                                        } else {
+                                        }
+                                        if (isset($_POST['inputAddCategory'])) {
                                         ?>
-                                            <span class="red-text"><?= isset($arrayRegexError['category']) ? $arrayRegexError['category'] : '' ?></span>
+                                            <span class="red-text"><?= isset($arrayErrorAddModal['category']) ? $arrayErrorAddModal['category'] : '' ?></span>
+                                            <span class="red-text"><?= isset($arrayErrorAddModal['categoryExist']) ? $arrayErrorAddModal['categoryExist'] : '' ?></span>
                                         <?php
                                         }
                                         ?>
@@ -80,11 +82,11 @@ require_once '../Controllers/adminCategoriesCtrl.php';
                                         <td class="center-align"><?= count($arrayCategories) ?> tableau(x)</td>
                                         <td class="center-align">
                                             <!--Bouton Modifier-->
-                                            <a class="btn btn waves-effect waves-light green accent-2 modal-trigger black-text" href="#modifyCategoryModal<?= $valueCategory['category_id'] ?>"><i class="material-icons left">edit</i>Modifier</a>
+                                            <a class="btn btn waves-effect waves-light green accent-2 modal-trigger black-text" href="#modifyCategoryModal<?= $valueCategory['category_id'] ?>"><i class="material-icons">edit</i></a>
                                             <!--/Bouton Modifier-->
 
                                             <!--Modal Modification-->
-                                            <div id="modifyCategoryModal<?= $valueCategory['category_id'] ?>" class="modal bottom-sheet ">
+                                            <div id="modifyCategoryModal<?= $valueCategory['category_id'] ?>" class="modal bottom-sheet <?= isset($_POST['update']) && $modalError && $valueCategory['category_id'] == $_POST['update'] ? 'autoOpenModal' : '' ?>">
                                                 <form action='' method="POST">
                                                     <div class="modal-header">
                                                         <h2 class="modalTitle black-text center-align">Modification Catégorie</h2>
@@ -92,8 +94,21 @@ require_once '../Controllers/adminCategoriesCtrl.php';
                                                     <div class="modal-content col l6 offset-l3">
                                                         <div class="input-field col l6 offset-l3 col m12 col s6">
                                                             <i class="material-icons prefix">featured_play_list</i>
-                                                            <input id="category" type="text" class="validate" name="inputModifyCategory" value="<?= $valueCategory['category_categories'] ?>" />
+                                                            <input id="category" type="text" class="validate" name="inputUpdateCategory" value="<?= $valueCategory['category_categories'] ?>" />
                                                             <label for="category">Ex: Lever de rideau</label>
+                                                            <?php
+                                                            if (empty($_POST['inputUpdateCategory'])) {
+                                                            ?>
+                                                                <span class="red-text"><?= isset($arrayErrorUpdateModal['categoryEmpty']) ? $arrayErrorUpdateModal['categoryEmpty'] : '' ?></span>
+                                                            <?php
+                                                            }
+                                                            if (isset($_POST['inputUpdateCategory'])) {
+                                                            ?>
+                                                                <span class="red-text"><?= isset($arrayErrorUpdateModal['category']) ? $arrayErrorUpdateModal['category'] : '' ?></span>
+                                                                <span class="red-text"><?= isset($arrayErrorUpdateModal['categoryExist']) ? $arrayErrorUpdateModal['categoryExist'] : '' ?></span>
+                                                            <?php
+                                                            }
+                                                            ?>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer col l6 offset-l3 center-align">
@@ -107,7 +122,7 @@ require_once '../Controllers/adminCategoriesCtrl.php';
                                         </td>
                                         <td class="center-align">
                                             <!--Bouton suppression-->
-                                            <a class="btn btn waves-effect waves-light deep-purple accent-1 modal-trigger" href="#deleteCategoryModal<?= $valueCategory['category_id'] ?>"><i class="material-icons left">delete</i>Supprimer</a>
+                                            <a class="btn btn waves-effect waves-light deep-purple accent-1 modal-trigger" href="#deleteCategoryModal<?= $valueCategory['category_id'] ?>"><i class="material-icons">delete</i></a>
                                             <!--/Bouton suppression-->
 
                                             <!--Modal de Suppression-->
@@ -133,16 +148,15 @@ require_once '../Controllers/adminCategoriesCtrl.php';
                         </table>
                     </div>
                 </div>
-                <div class="row center-align marginTop">
-                    <div class="col l12 m12 s12">
+                <div class="row center-align">
+                    <div class="offset-l4 col l2 col m6 col s12 marginTop">
                         <a class="waves-effect waves-light btn deep-purple lighten-1" href="adminPaintins.php">
-                            <i class="material-icons left">search</i>Gestion tableaux
+                            <i class="material-icons left">search</i>Tableaux
                         </a>
-                        <a class="waves-effect waves-light btn blue lighten-1 black-text" href="../index.php">
-                            <i class="material-icons left">home</i>Retour accueil
-                        </a>
+                    </div>
+                    <div class="col l2 col m6 col s12 marginTop">
                         <a class="waves-effect waves-light btn indigo lighten-1" href="adminDimensions.php">
-                            <i class="material-icons left">search</i>Gestion dimensions
+                            <i class="material-icons left">search</i>Dimensions
                         </a>
                     </div>
                 </div>
@@ -181,7 +195,7 @@ require_once '../Controllers/adminCategoriesCtrl.php';
             } ?>
 
             <?php if (isset($_SESSION['toastDeleteModal']) && $_SESSION['toastDeleteModal'] == true) { //Si la session existe est quelle est égale à "true"
-                echo 'M.toast({html: \'Le catégorie à bien été supprimée\',classes: \'red-text\'})'; // Créer le toast et le Message dans le toast
+                echo 'M.toast({html: \'La catégorie à bien été supprimée\',classes: \'red-text\'})'; // Créer le toast et le Message dans le toast
                 unset($_SESSION['toastDeleteModal']); // Retire la session
             } ?>
         });
